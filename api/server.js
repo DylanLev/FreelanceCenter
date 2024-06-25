@@ -9,6 +9,7 @@ import messageRoute from "./routes/message.route.js"
 import reviewRoute from "./routes/review.route.js"
 import authRoute from "./routes/auth.route.js"
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -24,6 +25,10 @@ try {
 };
 
 //Middlewares
+//Allow CORS
+//credential true: because passing cookie from client to backend server
+app.use(cors({origin:"http://localhost:5173", credentials:true}));
+
 //Allow app to write from client side
 app.use(express.json());
 
@@ -38,7 +43,13 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/reviews", reviewRoute);
 
+//Error handling
+app.use((err,req,res,next)=>{
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || "Something went wrong!"
 
+    return res.status(errorStatus).send(errorMessage);
+});
 
 app.listen(8800, ()=>{
     connect();
