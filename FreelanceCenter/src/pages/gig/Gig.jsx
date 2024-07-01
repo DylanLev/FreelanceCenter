@@ -1,72 +1,114 @@
-import React from 'react'
-import "./Gig.scss"
+import React from "react";
+import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
+import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
+import Reviews from "../../components/reviews/Reviews";
+//SECTIONS: GIG, SLIDER, ABOUT THIS GIG, ABOUT THE SELLER, BOX, REVIEWS
 
-const Gig = () => {
+function Gig() {
+  const {id} = useParams();
+  
+
+  const { isLoading, error, data, refetch } = useQuery({ //useQuery: request to a server
+    queryKey: ['gig'], 
+    queryFn: () => 
+      newRequest.get(`/gigs/single/${id}`).then((res)=>{
+        return res.data;
+      }),
+      
+  });
+
+  const userId = data?.userId
+
+  const { 
+    isLoading: isLoadingUser, 
+    error: errorUser, 
+    data: dataUser,
+  } = useQuery({ 
+    queryKey: ['user'], 
+    queryFn: () => 
+      newRequest.get(`/users/${userId}`).then((res) =>{
+        return res.data;
+      }),
+      enabled: !!userId, //enable this useQuery only if userId exists
+  });
+
   return (
     <div className="gig">
-      <div className="container">
+      {isLoading ? "Loading" : error ? "Something went wrong." : <div className="container">
         <div className="left">
-          <span className="breadCrumbs">FREELANCECENTER: GRAPHICS & DESIGN</span>
-          <h1>I will create ai generated art for you</h1>
-          <div className="user">
-            <img 
-            className='pp'
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1600" 
-            alt="" 
+          <span className="breadcrumbs">FreelanceCenter {">"} About this Gig {">"}</span>
+          <h1>{data.title}</h1>
+          {isLoadingUser ? "Loading" : errorUser ? "Something went wrong" : ( <div className="user">
+            <img
+              className="pp"
+              src= {dataUser.img || "/img/noavatar.jpg"}
+              alt=""
             />
-            <span>Avihai Levy</span>
-            <div className="stars">
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <span>5</span>
-            </div>
-          </div>
+            <span>{dataUser.username}</span>
+            {!isNaN(data.totalStars / data.starNumber) && (
+                <div className="stars"> 
+                  {Array(Math.round(data.totalStars / data.starNumber)).fill().map((item,i) => (
+                    <img src="/img/star.png" alt="" key={i} />
+                  ))}
+                  <span> 
+                    {Math.round(data.totalStars / data.starNumber)}
+                  </span>
+                </div>
+                )}
+          </div>)}
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">
-            <img 
-            src="https://images.pexels.com/photos/16094047/pexels-photo-16094047/free-photo-of-homme-mains-ordinateur-portable-internet.jpeg?auto=compress&cs=tinysrgb&w=600" 
-            alt="" />
-            <img 
-            src="https://images.pexels.com/photos/16094047/pexels-photo-16094047/free-photo-of-homme-mains-ordinateur-portable-internet.jpeg?auto=compress&cs=tinysrgb&w=600" 
-            alt="" />
-            <img src="https://images.pexels.com/photos/16094047/pexels-photo-16094047/free-photo-of-homme-mains-ordinateur-portable-internet.jpeg?auto=compress&cs=tinysrgb&w=600" 
-            alt="" />
-          </Slider>
-          <h2>About this Gig</h2>
+            {data.images.map(img =>(
+            <img
+              key={img}
+              src={img}
+              alt=""
+            />
+            ))}
+           
+          </Slider> 
+          <h2>About This Gig</h2>
           <p>
-            I use an AI program to create images based on text prompts.
-            This means I can help you to create a vision you have through a textual description
-            of your scene without requiring any reference images.
+            {data.desc}
           </p>
-          <div className="seller">
-            <h2>About the Seller</h2>
+              
+          {isLoadingUser ? ("Loading") : errorUser ? ("Something went wrong" ) : (<div className="seller">
+            <h2>About The Seller</h2> 
             <div className="user">
-              <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1600" alt=""/>
-            <div className="info">
-              <span>Avishai Levy</span>
-              <div className="stars">
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <span>5</span>
-            </div>
-            <button>Contact Me</button>
-            </div>
+              <img
+                src = {dataUser.img || "/img/noavatar.jpg"}
+                alt=""
+              />
+              <div className="info">
+                <span>{dataUser.username}</span>
+                {!isNaN(data.totalStars / data.starNumber) && (
+                <div className="stars"> 
+                  {Array(Math.round(data.totalStars / data.starNumber)).fill().map((item,i) => (
+                    <img src="/img/star.png" alt="" key={i} />
+                  ))}
+                  <span> 
+                    {Math.round(data.totalStars / data.starNumber)}
+                  </span>
+                </div>
+                )}
+                <button>Contact Me</button>
+              </div>
             </div>
             <div className="box">
               <div className="items">
                 <div className="item">
                   <span className="title">From</span>
-                  <span className="desc">Israel</span>
+                  <span className="desc">{dataUser.country}</span>
                 </div>
                 <div className="item">
                   <span className="title">Member since</span>
-                  <span className="desc">Aug 2023</span>
+                  <span className="desc">Aug 2022</span>
+                </div>
+                <div className="item">
+                  <span className="title">Avg. response time</span>
+                  <span className="desc">4 hours</span>
                 </div>
                 <div className="item">
                   <span className="title">Last delivery</span>
@@ -77,103 +119,57 @@ const Gig = () => {
                   <span className="desc">English</span>
                 </div>
               </div>
-              <hr/>
+              <hr />
               <p>
-                My name is Avishai, I enjoy creating AI generated art in my spare time.
-                I have a lot of experience using the AI program.
+                {dataUser.desc}
               </p>
             </div>
-          </div>
-          <div className="reviews">
-            <h2>Reviews</h2>
-            <div className="item">
-              <div className="user">
-                <img 
-                className='pp'
-                src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1600" 
-                alt="" 
-                />
-                <div className="info">
-                  <span>Ben Azulai</span>
-                  <div className="country">
-                    <img 
-                    src="/img/flag.png" 
-                    alt=""
-                    />
-                    <span>Israel</span>
-                  </div>
-                </div>
-              </div>
-              <div className="stars">
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <img src="/img/star.png" alt="" />
-              <span>5</span>
-            </div>
-            <p>
-              I just want to say that Avishai is very professional in his work. I work with him for 6 months 
-              and he is one of the best in Israel in his craft.
-              I recommend his services to everybody.
-            </p>
-            <div className="helpful">
-              <span>Helpful?</span>
-              <img src="/img/like.png" alt="" />
-              <span>Yes</span>
-              <img src="/img/dislike.png" alt="" />
-              <span>No</span>
-            </div>
-            </div>
-            <hr/>
-            </div>
-            
+          </div>)}
+          <Reviews gigId={id}/>
         </div>
         <div className="right">
           <div className="price">
-            <h3>1 AI generated image</h3>
-            <h3>₪200 (NIS)</h3>
+            <h3>{data.shortTitle}</h3>
+            <h2> ₪ {data.price}</h2>
           </div>
-          <p>I will create a unique high quality AI generated image based on a 
-            description that you give me.
+          <p>
+            {data.shortDesc}
           </p>
           <div className="details">
             <div className="item">
-            <img src="/img/clock.png" alt="" />
-            <span>2 days Delivery</span>
+              <img src="/img/clock.png" alt="" />
+              <span>{data.deliveryDate} Days Delivery</span>
             </div>
             <div className="item">
-            <img src="/img/recycle.png" alt="" />
-            <span>3 Revisions</span>
+              <img src="/img/recycle.png" alt="" />
+              <span>{data.revisionNumber} Revisions</span>
             </div>
-            <div className="features">
-              <div className="item">
-                <img src="/img/greencheck.png" alt="" />
-                <span>Prompt writing</span>
-              </div>
-              <div className="item">
-                <img src="/img/greencheck.png" alt="" />
-                <span>Artwork delivery</span>
-              </div>
-              <div className="item">
-                <img src="/img/greencheck.png" alt="" />
-                <span>Image upscaling</span>
-              </div>
-              <div className="item">
-                <img src="/img/greencheck.png" alt="" />
-                <span>Additional Design</span>
-              </div>
-            </div>
-            <button>Continue</button>
-          
           </div>
-          
-         
+          <div className="features">
+            {data.features.map(feature => (
+            <div className="item" key={feature}>
+              <img src="/img/greencheck.png" alt="" />
+              <span>{feature}</span>
+            </div>
+            ))}
+            <div className="item">
+              <img src="/img/greencheck.png" alt="" />
+              <span>Artwork delivery</span>
+            </div>
+            <div className="item">
+              <img src="/img/greencheck.png" alt="" />
+              <span>Image upscaling</span>
+            </div>
+            <div className="item">
+              <img src="/img/greencheck.png" alt="" />
+              <span>Additional design</span>
+            </div>
+          </div>
+          <button>Continue</button>
         </div>
-      </div>
+      </div>}
     </div>
-   
   );
-};
+}
 
 export default Gig;
