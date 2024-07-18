@@ -91,37 +91,31 @@ function Navbar() {
         <>
           <hr />
           <div className="menu">
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=programming">
              Programming
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=cyber">
             Cyber
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=hardware">
             Hardware
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=ai">
               AI Services
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=digital">
               Digital Marketing
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=embedded">
              Embedded
             </Link>
-            <Link className="link menuLink" to="/">
-             Digital Marketing
+            <Link className="link menuLink" to="/gigs?cat=automata">
+              Automata Theory
             </Link>
-            <Link className="link menuLink" to="/">
-            Embedded
-            </Link>
-            <Link className="link menuLink" to="/">
-              Courses
-            </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=datascience">
               Data Science
             </Link>
-            <Link className="link menuLink" to="/">
+            <Link className="link menuLink" to="/gigs?cat=webdesign">
               Web Design
             </Link>
           </div>

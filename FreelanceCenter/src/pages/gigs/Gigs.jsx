@@ -25,7 +25,7 @@ function Gigs() {
       newRequest.get(`/gigs${location.search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res=>{
         return res.data;
       }),
-  })
+  });
 
   const reSort = (type) => {
     setSort(type);

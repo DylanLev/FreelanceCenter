@@ -4,8 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import newRequest from '../../utils/newRequest.js';
 
 const Review = ({review}) => {
-  const { isLoading, error, data} = useQuery({ //useQuery: effectuer des requêtes à un serveur
-    queryKey: [review.userId], //DOIT ETRE UNIQUE clé de la requête pour identifier la requête & la mémoriser dans le cache de React Query. 
+  const { isLoading, error, data} = useQuery({ //useQuery: create request to a server
+    queryKey: [review.userId], //KEY of request MUST BE UNIQUE to memorize it in the cache of react query
     queryFn: () => 
       newRequest.get(`/users/${review.userId}`).then((res)=>{
         return res.data;
