@@ -5,6 +5,8 @@ import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import { Link } from "react-router-dom";
+
 //SECTIONS: GIG, SLIDER, ABOUT THIS GIG, ABOUT THE SELLER, BOX, REVIEWS
 
 function Gig() {
@@ -165,7 +167,11 @@ function Gig() {
               <span>Additional design</span>
             </div>
           </div>
-          <button>Continue</button>
+            <Link to={`/pay/${id}`}>
+            <button>Continue</button>
+            </Link>
+        
+         
         </div>
       </div>}
     </div>
