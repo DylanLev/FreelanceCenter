@@ -30,7 +30,8 @@ const GigCard = ({ item }) => {
             <span>{data.username}</span>
           </div>
           )}
-          <p>{item.desc}</p>
+          <strong>{item.title}</strong>
+          {item.desc}
           <div className="star">
             <img src="./img/star.png" alt="" />
             <span>
@@ -39,18 +40,23 @@ const GigCard = ({ item }) => {
             </span>
           </div>
         </div>
-        <hr />
         <div className="detail">
           <img src="./img/heart.png" alt="" />
           <div className="price">
             <span>STARTING AT</span>
             <h2>
-              $ {item.price}
-              
+            ₪{item.price}
             </h2>
-          </div>
+          </div> 
+              
         </div>
+        <hr/>
+
+       
       </div>
+      <br/>
+      <br/>
+      <br/>
     </Link>
   );
 };
