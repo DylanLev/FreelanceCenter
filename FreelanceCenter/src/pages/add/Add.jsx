@@ -62,7 +62,7 @@ const Add = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(state);
-    // navigate("/mygigs")
+    navigate("/mygigs");
   };
 
   return (
@@ -75,7 +75,7 @@ const Add = () => {
             <input
               type="text"
               name="title"
-              placeholder="e.g. I will do something I'm really good at"
+              placeholder="ex: I will code a software in Java language"
               onChange={handleChange}
             />
             <label htmlFor="">Category</label>
@@ -125,7 +125,7 @@ const Add = () => {
             <input
               type="text"
               name="shortTitle"
-              placeholder="e.g. One-page web design"
+              placeholder="ex: One-page web design"
               onChange={handleChange}
             />
             <label htmlFor="">Short Description</label>
@@ -147,7 +147,7 @@ const Add = () => {
             />
             <label htmlFor="">Add Features</label>
             <form action="" className="add" onSubmit={handleFeature}>
-              <input type="text" placeholder="e.g. page design" />
+              <input type="text" placeholder="ex: page design" />
               <button type="submit">add</button>
             </form>
             <div className="addedFeatures">

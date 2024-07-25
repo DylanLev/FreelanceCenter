@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./MyGigs.scss";
-import getCurrentUser from "../../utils/getCurrentUser";
+import getCurrentUser from "../../utils/getCurrentUser.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import newRequest from "../../utils/newRequest";
+import newRequest from "../../utils/newRequest.js";
 
 function MyGigs() {
   const currentUser = getCurrentUser();
@@ -13,7 +13,10 @@ function MyGigs() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
     queryFn: () =>
-      newRequest.get(`/gigs?userId=${currentUser.id}`).then((res) => {
+      newRequest.get(`/gigs?buyerId=${currentUser.id}`).then((res) => {
+        console.log(res.data); 
+        console.log(currentUser); 
+
         return res.data;
       }),
   });

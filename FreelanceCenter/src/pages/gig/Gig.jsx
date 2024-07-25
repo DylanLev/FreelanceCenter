@@ -156,15 +156,15 @@ function Gig() {
             ))}
             <div className="item">
               <img src="/img/greencheck.png" alt="" />
-              <span>Artwork delivery</span>
+              <span>Immediate delivery</span>
             </div>
             <div className="item">
               <img src="/img/greencheck.png" alt="" />
-              <span>Image upscaling</span>
+              <span>I answer questions</span>
             </div>
             <div className="item">
               <img src="/img/greencheck.png" alt="" />
-              <span>Additional design</span>
+              <span>Additional help</span>
             </div>
           </div>
             <Link to={`/pay/${id}`}>
