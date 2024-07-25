@@ -13,9 +13,8 @@ function MyGigs() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
     queryFn: () =>
-      newRequest.get(`/gigs?buyerId=${currentUser.id}`).then((res) => {
-        console.log(res.data); 
-        console.log(currentUser); 
+      newRequest.get(`/gigs?sellerId=${currentUser.id}`).then((res) => {
+         
 
         return res.data;
       }),
