@@ -32,7 +32,8 @@ const GigSchema = new Schema({
     },
     cover:{
         type: String,
-        required: true,
+        //true
+        required: false,
     },
     images:{
         type: [String],
@@ -40,19 +41,23 @@ const GigSchema = new Schema({
     },
     shortTitle:{
         type: String,
-        required: true,
+        //true
+        required: false,
     },
     shortDesc:{
         type: String,
-        required: true,
+        //true
+        required: false,
     },
     deliveryTime:{
         type: Number,
-        required: true,
+        //true
+        required: false,
     },
     revisionNumber:{
         type: String,
-        required: true,
+        //true
+        required: false,
     },
     features:{
         type: [String],

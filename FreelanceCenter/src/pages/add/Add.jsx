@@ -56,6 +56,7 @@ const Add = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myGigs"]);
+      
     },
   });
 
@@ -80,6 +81,7 @@ const Add = () => {
             />
             <label htmlFor="">Category</label>
             <select name="cat" id="cat" onChange={handleChange}>
+              <option value="">Select Category</option>
               <option value="programming">Programming</option>
               <option value="cyber">Cyber</option>
               <option value="hardware">Hardware</option>
